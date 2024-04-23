@@ -4,6 +4,7 @@ import AccountSecurityPage from '../components/pages/Account/parts/AccountSecuri
 import AccountAchievementsPage from '../components/pages/Account/parts/AccountAchievementsPage'
 import AccountCareersPage from '../components/pages/Account/parts/AccountCareersPage'
 import AccountCollectionsPage from '../components/pages/Account/parts/AccountCollectionsPage'
+import AccountHistoryPage from '../components/pages/Account/parts/AccountHistoryPage'
 
 import {AccountPart} from './types'
 
@@ -37,5 +38,10 @@ export const parts: AccountPart[] = [
         title: 'Компоненты',
         url: './profile/collections.png',
         component: AccountCollectionsPage
+    },
+    {
+        title: 'История',
+        url: './profile/history.png',
+        component: AccountHistoryPage
     }
 ]

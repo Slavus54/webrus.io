@@ -83,6 +83,20 @@ export interface ChannelType {
     url: string
 }
 
+export interface WageType {
+    title: string
+    position: string
+    value: number
+}
+
+export interface HistoryPageType {
+    id: string
+    title: string
+    type: string 
+    url: string 
+    timestamp: string
+}
+
 // Mapbox 
 
 export interface MapType {

@@ -62,7 +62,7 @@ const Profiles: React.FC = () => {
     }, [profiles, name, region])
 
     return (
-        <>
+        <div className='main profile'>
             <h2>Найдите друга или работника</h2>
             <div className='items small'>
                 <input value={name} onChange={e => setName(e.target.value)} placeholder='Имя пользователя'  type='text' />
@@ -88,7 +88,7 @@ const Profiles: React.FC = () => {
             }
 
             {loading && <Loading label='Загрузка пользователей' />}
-        </>
+        </div>
     )
 }
 

@@ -43,7 +43,7 @@ const Materials: React.FC = () => {
     }, [materials, title, category, level])
 
     return (
-        <>
+        <div className='main profile'>
             <h2>Поиск нужного материала</h2>
             <textarea value={title} onChange={e => setTitle(e.target.value)} placeholder='Название...' />
 
@@ -70,7 +70,7 @@ const Materials: React.FC = () => {
             }
 
             {loading && <Loading label='Загрузка материалов' />}
-        </>
+        </div>
     )
 }
 

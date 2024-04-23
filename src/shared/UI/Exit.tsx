@@ -1,6 +1,7 @@
 import {useContext} from 'react'
 import ImageLook from '../UI/ImageLook'
 import {AppContext} from '../../context/AppContext'
+import {updateProfileInfo, clearPages} from '../../utils/storage'
 import ExitImage from '../../assets/exit.png'
 import {ContextType} from '../../env/types'
 
@@ -9,6 +10,8 @@ const Exit = () => {
 
     const onExit = () => {
         accountUpdate('update', null, 1)
+        clearPages()
+        updateProfileInfo(null)
         window.location.reload()
     }
 

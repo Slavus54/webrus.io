@@ -1,14 +1,15 @@
 import React, {useState, useContext, useLayoutEffect, useMemo} from 'react'
 import ReactMapGL, {Marker} from 'react-map-gl'
 import {useMutation} from '@apollo/client'
+import {centum, datus} from '../../../shared/libs/libs'
 import ProfilePhoto from '../../../assets/photo/profile_photo.jpg'
-import {centum} from '../../../shared/libs/libs'
 import {AppContext} from '../../../context/AppContext'
 import MapPicker from '../../../shared/UI/MapPicker'
 import CloseIt from '../../../shared/UI/CloseIt'
 import DataPagination from '../../../shared/UI/DataPagination'
 import ImageLook from '../../../shared/UI/ImageLook'
 import {changeTitle, buildNotification} from '../../../utils/notifications'
+import {updatePages} from '../../../utils/storage'
 import Loading from '../../../shared/UI/Loading'
 import {getProfileM, manageProfileAchievementM} from './gql/mutations'
 import {TG_ICON, VIEW_CONFIG, MAP_ZOOM, token} from '../../../env/env'
@@ -57,6 +58,8 @@ const Profile: React.FC<CollectionPropsType> = ({params: {id}}) => {
         if (profile !== null) {
             setImage(profile.image === '' ? ProfilePhoto : profile.image) 
             setCords(profile.cords)
+
+            updatePages(profile.name, 'profile', window.location.pathname, datus.timestamp())
         }
     }, [profile])
 

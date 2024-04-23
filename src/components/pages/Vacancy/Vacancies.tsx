@@ -66,7 +66,7 @@ const Vacancies: React.FC = () => {
     }, [vacancies, title, category, stage, region])
 
     return (
-        <>
+        <div className='main profile'>
             <h2>Поиск лучших предложений</h2>
             <div className='items small'>
                 <input value={title} onChange={e => setTitle(e.target.value)} placeholder='Название' type='text' />
@@ -100,7 +100,7 @@ const Vacancies: React.FC = () => {
             }
 
             {loading && <Loading label='Загрузка вакансий' />}
-        </>
+        </div>
     )
 }
 

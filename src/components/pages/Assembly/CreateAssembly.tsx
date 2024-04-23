@@ -81,7 +81,7 @@ const CreateAssembly: React.FC<CollectionPropsType> = ({params: {id}}) => {
             <FormPagination items={[
                 <>    
                     <textarea value={title} onChange={e => setState({...state, title: e.target.value})} placeholder='Название...' />
-
+          
                     <select value={language} onChange={e => setState({...state, language: e.target.value})}>
                         {LANGUAGES.map(el => <option value={el}>{el}</option>)}
                     </select>
@@ -89,7 +89,7 @@ const CreateAssembly: React.FC<CollectionPropsType> = ({params: {id}}) => {
                     <div className='items small'>
                         {ASSEMBLY_TYPES.map(el => <div onClick={() => setState({...state, category: el})} className={el === category ? 'item label active' : 'item label'}>{el}</div>)}
                     </div>                   
-
+          
                     <h4 className='pale'>Стоимость: <b>{ASSEMBLY_DEFALT_COST}</b> очков</h4>    
                 </>,
                 <>

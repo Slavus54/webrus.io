@@ -7,8 +7,8 @@ export const createVacancyM = gql`
 `
 
 export const getVacancyM = gql`
-    mutation getVacancy($shortid: String!) {
-        getVacancy(shortid: $shortid) {
+    mutation getVacancy($id: String!) {
+        getVacancy(id: $id) {
             shortid
             name
             title

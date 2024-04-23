@@ -3,6 +3,7 @@ import {useMutation} from '@apollo/client'
 import {centum, datus} from '../../../shared/libs/libs'
 import {AppContext} from '../../../context/AppContext'
 import {changeTitle, buildNotification} from '../../../utils/notifications'
+import {updatePages} from '../../../utils/storage'
 import Loading from '../../../shared/UI/Loading'
 import DataPagination from '../../../shared/UI/DataPagination'
 import ImageLoader from '../../../shared/UI/ImageLoader'
@@ -85,6 +86,8 @@ const Material: React.FC<CollectionPropsType> = ({params: {id}}) => {
         if (material !== null) {
             setRating(material.rating)
             setScreen(material.screen)
+            
+            updatePages(material.title, 'material', window.location.pathname, datus.timestamp())
         }
     }, [material])
 

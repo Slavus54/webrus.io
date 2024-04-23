@@ -1,5 +1,7 @@
-// Home
+// Static Pages
+
 import Home from '../components/head/Home'
+import About from '../components/pages/About/About'
 
 // Authentication
 
@@ -78,6 +80,13 @@ export const items: RouteItem[] = [
         url: '/profiles',
         component: Profiles,
         status: RouteStatuses.RegisteredOnly,
+        visible: true
+    },
+    {
+        title: 'Миссия',
+        url: '/about',
+        component: About,
+        status: RouteStatuses.StrangerOnly,
         visible: true
     },
     {

@@ -3,6 +3,7 @@ import {useMutation} from '@apollo/client'
 import {centum, datus} from '../../../shared/libs/libs'
 import {AppContext} from '../../../context/AppContext'
 import {changeTitle, buildNotification} from '../../../utils/notifications'
+import {updatePages} from '../../../utils/storage'
 import Loading from '../../../shared/UI/Loading'
 import DataPagination from '../../../shared/UI/DataPagination'
 import CounterView from '../../../shared/UI/CounterView'
@@ -100,6 +101,8 @@ const Project: React.FC<CollectionPropsType> = ({params: {id}}) => {
 
             setIdea(project.idea)
             setProgress(project.progress)
+
+            updatePages(project.title, 'project', window.location.pathname, datus.timestamp())
         }
     }, [project])
 
@@ -118,6 +121,10 @@ const Project: React.FC<CollectionPropsType> = ({params: {id}}) => {
             setState({...state, role: personality.role})
         }
     }, [personality])
+
+    const onView = (tag: string) => {
+        centum.go(tag, 'telegram')
+    }
 
     const onManageStatus = (option: string) => {
         manageProjectStatus({
@@ -167,7 +174,7 @@ const Project: React.FC<CollectionPropsType> = ({params: {id}}) => {
 
                     <div className='items small'>
                         <h4 className='pale'>Тип: {project.category}</h4>
-                        <h4 className='pale'>Уровень сложности: {project.level}</h4>
+                        <h4 className='pale'>Язык: {project.language}</h4>
                     </div>
                 </>
             }
@@ -188,7 +195,7 @@ const Project: React.FC<CollectionPropsType> = ({params: {id}}) => {
                 <>
                     <h2>Новая Задача</h2>
                     
-                    <textarea value={text} onChange={e => setState({...state, text: e.target.value})} placeholder='Сформулируйте вашу идею...' />
+                    <textarea value={text} onChange={e => setState({...state, text: e.target.value})} placeholder='Сформулируйте вашу проблему...' />
 
                     <div className='items small'>
                         {TASK_TYPES.map(el => <div onClick={() => setState({...state, direction: el})} className={el === direction ? 'item label active' : 'item label'}>{el}</div>)}
@@ -213,9 +220,11 @@ const Project: React.FC<CollectionPropsType> = ({params: {id}}) => {
                 <>
                     <h2>Идея для проекта</h2>
 
-                    <textarea value={idea} onChange={e => setIdea(e.target.value)} placeholder='Сформулируйте вашу идею...' />
+                    <textarea value={idea} onChange={e => setIdea(e.target.value)} placeholder='Текст...' />
 
                     <button onClick={onUpdateIdea} className='light'>Обновить</button>
+
+                    <h2>Моя роль</h2>
 
                     <select value={role} onChange={e => setState({...state, role: e.target.value})}>
                         {PROJECT_ROLES.map(el => <option value={el}>{el}</option>)}
@@ -280,7 +289,7 @@ const Project: React.FC<CollectionPropsType> = ({params: {id}}) => {
                                 <h4 className='pale'>Обьём и период использования</h4>
 
                                 <CounterView num={lines} setNum={setLines} part={LINES_PART} min={0} max={MAX_LINES}>
-                                    Количество строк кода: {lines}
+                                    Строк кода: {lines}
                                 </CounterView>
 
                                 <select value={period} onChange={e => setState({...state, period: e.target.value})}>
@@ -319,10 +328,18 @@ const Project: React.FC<CollectionPropsType> = ({params: {id}}) => {
                                 }
                             </>
                     }
-                </>
-            }
 
-           
+                    <DataPagination items={project.members} setItems={setMembers} label='Участники проекта:' />
+                    <div className='items half'>
+                        {members.map(el => 
+                            <div onClick={() => onView(el.telegram)} className='item panel'>
+                                {centum.shorter(el.name)}
+                                <p className='pale'>{el.role}</p>
+                            </div>
+                        )}
+                    </div>
+                </>
+            }           
 
             {project === null && <Loading label='Загрузка проекта' />}
         </>

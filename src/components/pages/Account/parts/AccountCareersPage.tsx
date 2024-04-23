@@ -68,7 +68,7 @@ const AccountCareersPage: React.FC<AccountPropsType> = ({profile}) => {
                             {CAREER_TYPES.map(el => <option value={el}>{el}</option>)}
                         </select>
 
-                        <h4 className='pale'>Выручка ($)</h4>
+                        <h4 className='pale'>Доход в рублях</h4>
                         <input value={salary} onChange={e => setState({...state, salary: parseInt(e.target.value)})} placeholder='Выручка' type='text' />
 
                         <h4 className='pale'>Длительность: <b>{experience} месяцев</b></h4>

@@ -2,8 +2,9 @@ import React, {useState, useContext, useLayoutEffect, useMemo} from 'react'
 import ReactMapGL, {Marker} from 'react-map-gl'
 import {AppContext} from '../../../context/AppContext'
 import {useMutation} from '@apollo/client'
-import {centum} from '../../../shared/libs/libs'
+import {centum, datus} from '../../../shared/libs/libs'
 import {changeTitle, buildNotification} from '../../../utils/notifications'
+import {updatePages} from '../../../utils/storage'
 import RouterNavigator from '../../router/RouterNavigator'
 import ImageLoader from '../../../shared/UI/ImageLoader'
 import ImageLook from '../../../shared/UI/ImageLook'
@@ -13,7 +14,7 @@ import Loading from '../../../shared/UI/Loading'
 import DataPagination from '../../../shared/UI/DataPagination'
 import {getAssemblyM, manageAssemblyStatusM, updateAssemblyInformationM, manageAssemblyLocationM} from './gql/mutations'
 import {LOCATION_TYPES} from './env'
-import {STAGES, SEARCH_PERCENT, VIEW_CONFIG, MAP_ZOOM, token} from '../../../env/env'
+import {STAGES, VIEW_CONFIG, MAP_ZOOM, token} from '../../../env/env'
 import {CollectionPropsType, ContextType, MapType, Cords} from '../../../env/types'
 
 const Assembly: React.FC<CollectionPropsType> = ({params: {id}}) => {
@@ -87,6 +88,7 @@ const Assembly: React.FC<CollectionPropsType> = ({params: {id}}) => {
             setState({...state, url: assembly.url, rating: assembly.rating})
 
             setCords(assembly.cords)
+            updatePages(assembly.title, 'assembly', window.location.pathname, datus.timestamp())
         }
     }, [assembly])
 

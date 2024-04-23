@@ -7,8 +7,8 @@ export const createProjectM = gql`
 `
 
 export const getProjectM = gql`
-    mutation getProject($shortid: String!) {
-        getProject(shortid: $shortid) {
+    mutation getProject($id: String!) {
+        getProject(id: $id) {
             shortid
             name
             title

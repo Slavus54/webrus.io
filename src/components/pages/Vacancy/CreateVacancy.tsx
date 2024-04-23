@@ -63,7 +63,7 @@ const CreateVacancy: React.FC<CollectionPropsType> = ({params: {id}}) => {
     const onCreate = () => {
         createVacancy({
             variables: {
-                name: account.name, id, title, category, stage, url, salary, region, cords, candidate, msg, rates
+                name: account.name, id, title, category, stage, url, experience, salary, region, cords, candidate, msg, rates
             }
         })
     }
@@ -96,7 +96,7 @@ const CreateVacancy: React.FC<CollectionPropsType> = ({params: {id}}) => {
                         </div>
                         
                         <div className='item'>
-                            <h4 className='pale'>Зарплата ($)</h4>
+                            <h4 className='pale'>Зарплата в рублях</h4>
                             <input value={salary} onChange={e => setState({...state, salary: parseInt(e.target.value)})} placeholder='Заработная плата' type='text' />
                         </div>                       
                     </div>

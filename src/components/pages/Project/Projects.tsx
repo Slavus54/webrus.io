@@ -7,7 +7,7 @@ import Loading from '../../../shared/UI/Loading'
 import DataPagination from '../../../shared/UI/DataPagination'
 import {getProjectsQ} from './gql/queries'
 import {PROJECT_DEFAULT_PROGRESS} from './env'
-import {WEB_DIRECTIONS, LEVELS, SEARCH_PERCENT} from '../../../env/env'
+import {WEB_DIRECTIONS, LANGUAGES, SEARCH_PERCENT} from '../../../env/env'
 
 const Projects: React.FC = () => {
 
@@ -16,7 +16,7 @@ const Projects: React.FC = () => {
 
     const [title, setTitle] = useState<string>('')
     const [category, setCategory] = useState<string>(WEB_DIRECTIONS[0])
-    const [level, setLevel] = useState<string>(LEVELS[0])
+    const [language, setLanguage] = useState<string>(LANGUAGES[0])
     const [progress, setProgress] = useState<number>(PROJECT_DEFAULT_PROGRESS)
 
     const {data, loading} = useQuery(getProjectsQ)
@@ -32,7 +32,7 @@ const Projects: React.FC = () => {
 
     useMemo(() => {
         if (projects !== null) {
-            let result: any[] = projects.filter(el => el.category === category && el.level === level)
+            let result: any[] = projects.filter(el => el.category === category && el.language === language)
 
             if (title.length !== 0) {
                 result = result.filter(el => centum.search(el.title, title, SEARCH_PERCENT))
@@ -42,10 +42,10 @@ const Projects: React.FC = () => {
             
             setFiltered(result)
         }
-    }, [projects, title, category, level, progress])
+    }, [projects, title, category, language, progress])
 
     return (
-        <>
+        <div className='main profile'>
             <h2>Найдите интересущий вас проект</h2>
             <textarea value={title} onChange={e => setTitle(e.target.value)} placeholder='Название...' />
 
@@ -53,8 +53,8 @@ const Projects: React.FC = () => {
                 {WEB_DIRECTIONS.map(el => <div onClick={() => setCategory(el)} className={el === category ? 'item label active' : 'item label'}>{el}</div>)}
             </div>
 
-            <select value={level} onChange={e => setLevel(e.target.value)}>
-                {LEVELS.map(el => <option value={el}>{el}</option>)}
+            <select value={language} onChange={e => setLanguage(e.target.value)}>
+                {LANGUAGES.map(el => <option value={el}>{el}</option>)}
             </select>
 
             <h4 className='pale'>Прогресс: <b>{progress}%</b></h4>
@@ -67,7 +67,8 @@ const Projects: React.FC = () => {
                     {filtered.map(el => 
                         <div className='item panel'>
                             <RouterNavigator url={`/project/${el.shortid}`}>
-                                {centum.shorter(el.title)}
+                                {centum.shorter(el.title, 4)}
+                                <p>{el.progress}%</p>
                             </RouterNavigator>
                         </div>
                     )}
@@ -75,7 +76,7 @@ const Projects: React.FC = () => {
             }
 
             {loading && <Loading label='Загрузка проектов' />}
-        </>
+        </div>
     )
 }
 

@@ -4,6 +4,7 @@ import {useMutation} from '@apollo/client'
 import {centum, datus} from '../../../shared/libs/libs'
 import {AppContext} from '../../../context/AppContext'
 import {changeTitle, buildNotification} from '../../../utils/notifications'
+import {updatePages} from '../../../utils/storage'
 import RouterNavigator from '../../router/RouterNavigator'
 import MapPicker from '../../../shared/UI/MapPicker'
 import ImageLoader from '../../../shared/UI/ImageLoader'
@@ -11,7 +12,6 @@ import ImageLook from '../../../shared/UI/ImageLook'
 import CloseIt from '../../../shared/UI/CloseIt'
 import Loading from '../../../shared/UI/Loading'
 import DataPagination from '../../../shared/UI/DataPagination'
-
 import {getVacancyM, updateVacancyRateM, manageVacancyPollM, manageVacancyPhotoM} from './gql/mutations'
 import {POLL_TYPES, PHOTO_TYPES, RATE_PERCENT} from './env'
 import {VIEW_CONFIG, MAP_ZOOM, token} from '../../../env/env'
@@ -85,6 +85,8 @@ const Vacancy: React.FC<CollectionPropsType> = ({params: {id}}) => {
         if (vacancy !== null) {
             setIsAuthor(vacancy.name === account.name)
             setCords(vacancy.cords)
+
+            updatePages(vacancy.title, 'vacancy', window.location.pathname, datus.timestamp())
         }
     }, [vacancy])
 
@@ -152,13 +154,15 @@ const Vacancy: React.FC<CollectionPropsType> = ({params: {id}}) => {
                                 <h2>Ставки для вакансии</h2>
 
                                 <div className='items small'>
-                                    <h4 className='pale'>Минимальная ставка: <b>{vacancy.salary}$</b></h4>
+                                    <h4 className='pale'>Минимальная ставка: <b>{vacancy.salary}</b> рублей</h4>
                                     <h4 className='pale'>Общее количество: <b>{vacancy.rates}</b></h4>
                                 </div>
 
-                                <RouterNavigator url={`/profile/${vacancy.candidate}`}>
-                                    <button className='light'>Кандидат</button>
-                                </RouterNavigator>
+                                {vacancy.candidate !== '' &&
+                                    <RouterNavigator url={`/profile/${vacancy.candidate}`}>
+                                        <button className='light'>Кандидат</button>
+                                    </RouterNavigator>
+                                }
 
                                 <h2>Новая Фотография</h2>
 
@@ -178,7 +182,7 @@ const Vacancy: React.FC<CollectionPropsType> = ({params: {id}}) => {
 
                                 <textarea value={msg} onChange={e => setState({...state, msg: e.target.value})} placeholder='Сообщение...' />
 
-                                <h4 className='pale'>Заработная плата: <b>{salary}$</b></h4>
+                                <h4 className='pale'>Заработная плата: <b>{salary}₽</b></h4>
                                 <input value={percent} onChange={e => setPercent(parseInt(e.target.value))} type='range' step={1} />
 
                                 <button onClick={onUpdateRate} className='light'>Сделать</button>

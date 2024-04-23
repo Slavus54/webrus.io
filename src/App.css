@@ -250,8 +250,12 @@ input[type=text] {
 	user-select: none;
 }
 
-.text {
+.article {
+	text-indent: 2rem;
 	text-align: left;
+}
+
+.text {	
 	width: 50%;
 }
 

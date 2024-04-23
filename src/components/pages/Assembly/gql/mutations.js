@@ -7,8 +7,8 @@ export const createAssemblyM = gql`
 `
 
 export const getAssemblyM = gql`
-    mutation getAssembly($shortid: String!) {
-        getAssembly(shortid: $shortid) {
+    mutation getAssembly($id: String!) {
+        getAssembly(id: $id) {
             shortid
             name
             title

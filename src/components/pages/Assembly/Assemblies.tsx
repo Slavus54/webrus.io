@@ -67,7 +67,7 @@ const Assemblies: React.FC = () => {
     }, [assemblies, title, category, language, region])
 
     return (
-        <>
+        <div className='main profile'>
             <h2>Найдите ближайшее мероприятие</h2>
             <div className='items small'>
                 <input value={title} onChange={e => setTitle(e.target.value)} placeholder='Название' type='text' />
@@ -101,7 +101,7 @@ const Assemblies: React.FC = () => {
             }
 
             {loading && <Loading label='Загрузка ассамблей' />}
-        </>
+        </div>
     )
 }
 
