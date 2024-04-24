@@ -8,8 +8,7 @@ const FormPagination: React.FC<FormPaginationProps> = ({children, items = []}) =
     const [num, setNum] = useState<number>(0)
 
     return (
-        <>
-            
+        <div className='main profile'>
             <div className='items small'>
                 <ImageLook onClick={() => num > 0 && setNum(num - 1)} src={LeftArrow} min={2} max={2} className='icon' alt='prev' />
                     {children}
@@ -17,7 +16,7 @@ const FormPagination: React.FC<FormPaginationProps> = ({children, items = []}) =
             </div>
 
             {items[num]}           
-        </>
+        </div>
     )
 }
 

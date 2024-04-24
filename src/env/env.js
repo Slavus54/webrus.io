@@ -31,6 +31,6 @@ export const WEBSERVER_URL = 'https://webrus-backend.onrender.com/graphql'
 export const TOWNS_API_ENDPOINT = 'https://towns-api.onrender.com/towns-fragment/39&159'
 
 export const SEARCH_PERCENT = 60
-export const PAGINATION_LIMIT = 4
+export const PAGINATION_LIMIT = 3
 export const COLLECTION_LIMIT = 10
 export const MAP_ZOOM = 14

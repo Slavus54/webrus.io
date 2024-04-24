@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useMemo} from 'react'
 import ReactMapGL, {Marker} from 'react-map-gl'
 import {useMutation} from '@apollo/client'
 import {centum} from '../../../../shared/libs/libs'
+import RouterNavigator from '../../../router/RouterNavigator'
 import MapPicker from '../../../../shared/UI/MapPicker'
 import {updateProfileInfo, getTownsFromStorage} from '../../../../utils/storage'
 import {buildNotification} from '../../../../utils/notifications'
@@ -13,9 +14,9 @@ const AccountGeoPage: React.FC<AccountPropsType> = ({profile}) => {
     const [view, setView] = useState<MapType>(VIEW_CONFIG)
     const [towns] = useState<TownType[]>(getTownsFromStorage())
 
-    const [isHome, setIsHome] = useState<boolean>(true)
     const [region, setRegion] = useState<string>(profile.region)
     const [cords, setCords] = useState<Cords>({lat: profile.cords.lat, long: profile.cords.long})
+    const [isHome, setIsHome] = useState<boolean>(cords.lat === profile.cords.lat)
 
     useEffect(() => {
         if (region.length !== 0) {
@@ -23,15 +24,13 @@ const AccountGeoPage: React.FC<AccountPropsType> = ({profile}) => {
 
             if (result !== undefined) {
                 setRegion(result.translation)
-                setCords(isHome ? {lat: profile.cords.lat, long: profile.cords.long} : result.cords) 
+                setCords(result.translation === profile.region ? profile.cords : result.cords)               
             }
         }
     }, [region])
 
-    useEffect(() => {
-        if (isHome) {
-            setIsHome(false)
-        }
+    useMemo(() => {
+        setIsHome(cords.lat === profile.cords.lat)
 
         setView({...view, latitude: cords.lat, longitude: cords.long, zoom: MAP_ZOOM})
     }, [cords])
@@ -42,6 +41,11 @@ const AccountGeoPage: React.FC<AccountPropsType> = ({profile}) => {
             updateProfileInfo(null)
         }
     })
+
+    const onReset = () => {
+        setRegion(profile.region)
+        setCords(profile.cords)
+    }
   
     const onUpdate = () => {
         updateProfileGeoInfo({
@@ -59,12 +63,27 @@ const AccountGeoPage: React.FC<AccountPropsType> = ({profile}) => {
             <input value={region} onChange={e => setRegion(e.target.value)} placeholder='Регион' type='text' />
             
             <ReactMapGL onClick={e => setCords(centum.mapboxCords(e))} {...view} onViewportChange={(e: any) => setView(e)} mapboxApiAccessToken={token}>
+                {!isHome &&
+                    <Marker latitude={profile.cords.lat} longitude={profile.cords.long}>
+                       <MapPicker type={'home'}  />
+                    </Marker>
+                }
+                
                 <Marker latitude={cords.lat} longitude={cords.long}>
                     <MapPicker type={isHome ? 'home' : 'picker'}  />
-                </Marker>
+                </Marker>                
             </ReactMapGL> 
 
-            <button onClick={onUpdate}>Обновить</button>
+            <div className='items small'>
+                <button onClick={onReset}>Сбросить</button>
+                <button onClick={onUpdate}>Обновить</button>
+            </div>
+            
+            <h2>Учебные заведения</h2>
+            
+            <RouterNavigator url='/schools'>
+                <button className='light'>Смотреть</button>
+            </RouterNavigator>
         </div>
     )
 }

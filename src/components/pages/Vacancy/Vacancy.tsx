@@ -139,7 +139,7 @@ const Vacancy: React.FC<CollectionPropsType> = ({params: {id}}) => {
     }
 
     return (
-        <>
+        <div className='main profile'>
             {vacancy !== null &&
                 <>
                     <h2>{vacancy.title}</h2>
@@ -269,7 +269,7 @@ const Vacancy: React.FC<CollectionPropsType> = ({params: {id}}) => {
             }
 
             {vacancy === null && <Loading label='Загрузка страницы вакансии' />}
-        </>
+        </div>
     )
 }
 

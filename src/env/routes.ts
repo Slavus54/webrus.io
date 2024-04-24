@@ -32,6 +32,12 @@ import CreateAssembly from '../components/pages/Assembly/CreateAssembly'
 import Assemblies from '../components/pages/Assembly/Assemblies'
 import Assembly from '../components/pages/Assembly/Assembly'
 
+// School's Components
+
+import CreateSchool from '../components/pages/School/CreateSchool'
+import Schools from '../components/pages/School/Schools'
+import School from '../components/pages/School/School'
+
 // Profile's Components
 
 import Profiles from '../components/pages/Profile/Profiles'
@@ -74,6 +80,13 @@ export const items: RouteItem[] = [
         component: Assemblies,
         status: RouteStatuses.RegisteredOnly,
         visible: true
+    },
+    {
+        title: '',
+        url: '/schools',
+        component: Schools,
+        status: RouteStatuses.RegisteredOnly,
+        visible: false
     },
     {
         title: 'Пользователи',
@@ -156,6 +169,20 @@ export const items: RouteItem[] = [
         title: '',
         url: '/assembly/:id',
         component: Assembly,
+        status: RouteStatuses.RegisteredOnly,
+        visible: false
+    },
+    {
+        title: '',
+        url: '/create-school/:id',
+        component: CreateSchool,
+        status: RouteStatuses.RegisteredOnly,
+        visible: false
+    },
+    {
+        title: '',
+        url: '/school/:id',
+        component: School,
         status: RouteStatuses.RegisteredOnly,
         visible: false
     },

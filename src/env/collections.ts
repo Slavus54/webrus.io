@@ -16,5 +16,9 @@ export const components: AccountComponentType[] = [
     {
         title: 'Ассамблея',
         url: 'assembly'
+    },
+    {
+        title: 'Школа',
+        url: 'school'
     }
 ]

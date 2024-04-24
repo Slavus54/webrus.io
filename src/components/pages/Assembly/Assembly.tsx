@@ -121,7 +121,7 @@ const Assembly: React.FC<CollectionPropsType> = ({params: {id}}) => {
     }
 
     return (
-        <>
+        <div className='main profile'>
             {assembly !== null && personality === null &&
                 <>
                     <h2>Добро пожаловать на ассамблею!</h2>
@@ -227,7 +227,7 @@ const Assembly: React.FC<CollectionPropsType> = ({params: {id}}) => {
             }
 
             {assembly === null && <Loading label='Загрузка страницы ассамблеи' />}
-        </>
+        </div>
     )
 }
 

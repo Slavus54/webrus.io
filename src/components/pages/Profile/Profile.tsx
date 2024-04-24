@@ -86,7 +86,7 @@ const Profile: React.FC<CollectionPropsType> = ({params: {id}}) => {
     }
 
     return (
-        <>
+        <div className='main profile'>
             {profile !== null &&
                 <>
                     <ImageLook src={image} className='photo' alt='account photo' />
@@ -135,7 +135,7 @@ const Profile: React.FC<CollectionPropsType> = ({params: {id}}) => {
             }
 
             {profile === null && <Loading label='Загрузка страницы пользователя' />}
-        </>
+        </div>
     )
 }
 

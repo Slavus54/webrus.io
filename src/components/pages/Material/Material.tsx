@@ -151,7 +151,7 @@ const Material: React.FC<CollectionPropsType> = ({params: {id}}) => {
     }
 
     return (
-        <>
+        <div className='main profile'>
             {material !== null &&
                 <>
                     <h2>{material.title}</h2>
@@ -258,7 +258,7 @@ const Material: React.FC<CollectionPropsType> = ({params: {id}}) => {
             }
 
             {material == null && <Loading label='Материал загружается' />}
-        </>
+        </div>
     )
 }
 

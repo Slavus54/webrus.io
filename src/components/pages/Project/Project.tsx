@@ -167,7 +167,7 @@ const Project: React.FC<CollectionPropsType> = ({params: {id}}) => {
     }
 
     return (
-        <>
+        <div className='main profile'>
             {project !== null && 
                 <>
                     <h2>{project.title}</h2>
@@ -342,7 +342,7 @@ const Project: React.FC<CollectionPropsType> = ({params: {id}}) => {
             }           
 
             {project === null && <Loading label='Загрузка проекта' />}
-        </>
+        </div>
     )
 }
 

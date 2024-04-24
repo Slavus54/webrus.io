@@ -3,6 +3,7 @@ import {PAGINATION_LIMIT} from '../../env/env'
 import {DataPaginationProps} from '../../env/types'
 
 const DataPagination: React.FC<DataPaginationProps> = ({items = [], setItems, label = ''}) => {
+    const [parts] = useState<any[]>(items)
     const [maxPage, setMaxPage] = useState<number>(1)
     const [currentPage, setCurrentPage] = useState<number>(0)
 
@@ -20,7 +21,7 @@ const DataPagination: React.FC<DataPaginationProps> = ({items = [], setItems, la
     }, [maxPage])
 
     useEffect(() => {
-        let result = items.slice((currentPage - 1) * PAGINATION_LIMIT, currentPage * PAGINATION_LIMIT)
+        let result = parts.slice((currentPage - 1) * PAGINATION_LIMIT, currentPage * PAGINATION_LIMIT)
   
         setItems(result)
     }, [currentPage])
