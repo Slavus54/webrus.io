@@ -3,12 +3,14 @@
 ### About    
 
 Project for web-developers in many fields (frontend, backend, UI/UX, QA and DevOps) in Russia.        
-Study, work and become greater each day with Webrus.IO   
+Study, work and become greater everyday with Webrus.IO   
 
 ### Technologies   
 
-Frontend: *React, TypeScript, Apollo, datus.js, centum.js, react-map-gl, uniqid, axios*.      
-Backend: *ExpressJS, Apollo, GraphQL, MongoDB, bcrypt, mongoose*.      
+Frontend: *React, TypeScript, datus.js, centum.js, react-map-gl, uniqid, axios*.       
+State Management: *Context API, Cookies, Local/Session Storages, Recoil*.    
+API: *Apollo, GraphQL*.    
+Backend: *ExpressJS, MongoDB, bcrypt, mongoose*.        
 Unit Testing: *None*.  
 Deployment: *Render* and *Vercel*.    
 
