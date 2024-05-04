@@ -68,8 +68,8 @@ const Projects: React.FC = () => {
                         <div className='item panel'>
                             <RouterNavigator url={`/project/${el.shortid}`}>
                                 {centum.shorter(el.title, 4)}
-                                <p>{el.progress}%</p>
                             </RouterNavigator>
+                            <p>{el.progress}%</p>
                         </div>
                     )}
                 </div>

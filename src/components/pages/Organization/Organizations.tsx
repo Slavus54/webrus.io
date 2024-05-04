@@ -8,30 +8,31 @@ import RouterNavigator from '../../router/RouterNavigator'
 import MapPicker from '../../../shared/UI/MapPicker'
 import Loading from '../../../shared/UI/Loading'
 import DataPagination from '../../../shared/UI/DataPagination'
-import {getSchoolsQ} from './gql/queries'
-import {SCHOOL_TYPES} from './env'
+import {getOrganizationsQ} from './gql/queries'
+import {ORGANIZATION_TYPES, OWNERSHIP_TYPES} from './env'
 import {SEARCH_PERCENT, VIEW_CONFIG, MAP_ZOOM, token} from '../../../env/env'
 import {MapType, TownType, Cords} from '../../../env/types'
 
-const Schools: React.FC = () => {
+const Organizations: React.FC = () => {
     const [view, setView] = useState<MapType>(VIEW_CONFIG)
     const [towns] = useState<TownType[]>(getTownsFromStorage())
 
     const [filtered, setFiltered] = useState<any[]>([])
-    const [schools, setSchools] = useState<any[] | null>(null)
+    const [organizations, setOrganizations] = useState<any[] | null>(null)
 
     const [title, setTitle] = useState<string>('')
-    const [category, setCategory] = useState<string>(SCHOOL_TYPES[0])
+    const [category, setCategory] = useState<string>(ORGANIZATION_TYPES[0])
+    const [format, setFormat] = useState<string>(OWNERSHIP_TYPES[0])
     const [region, setRegion] = useState<string>(towns[0].translation)
     const [cords, setCords] = useState<Cords>(towns[0].cords)
 
-    const {data, loading} = useQuery(getSchoolsQ)
+    const {data, loading} = useQuery(getOrganizationsQ)
 
     useLayoutEffect(() => {
-        changeTitle('Schools')
+        changeTitle('Organizations')
     
         if (data) {
-            setSchools(data.getSchools)
+            setOrganizations(data.getOrganizations)
         }
 
     }, [data])
@@ -52,8 +53,8 @@ const Schools: React.FC = () => {
     }, [cords])
 
     useMemo(() => {
-        if (schools !== null) {
-            let result: any[] = schools.filter(el => el.region === region)
+        if (organizations !== null) {
+            let result: any[] = organizations.filter(el => el.format === format && el.region === region)
 
             if (title.length !== 0) {
                 result = result.filter(el => centum.search(el.title, title, SEARCH_PERCENT))
@@ -63,19 +64,23 @@ const Schools: React.FC = () => {
 
             setFiltered(result)
         }
-    }, [schools, title, category, region])
+    }, [organizations, title, category, format, region])
 
     return (
         <div className='main profile'>
-            <h2>Найдите своё учебное заведение</h2>
+            <h2>Поиск местных организаций</h2>
             <div className='items small'>
                 <input value={title} onChange={e => setTitle(e.target.value)} placeholder='Название' type='text' />
                 <input value={region} onChange={e => setRegion(e.target.value)} placeholder='Регион' type='text' />
             </div>
 
             <div className='items small'>
-                {SCHOOL_TYPES.map(el => <div onClick={() => setCategory(el)} className={el === category ? 'item label active' : 'item label'}>{el}</div>)}
+                {ORGANIZATION_TYPES.map(el => <div onClick={() => setCategory(el)} className={el === category ? 'item label active' : 'item label'}>{el}</div>)}
             </div>
+            
+            <select value={format} onChange={e => setFormat(e.target.value)}>
+                {OWNERSHIP_TYPES.map(el => <option value={el}>{el}</option>)}
+            </select>
 
             <DataPagination items={filtered} setItems={setFiltered} label='Список на карте:' />
 
@@ -87,7 +92,7 @@ const Schools: React.FC = () => {
                     
                     {filtered.map(el => 
                         <Marker latitude={el.cords.lat} longitude={el.cords.long}>
-                            <RouterNavigator url={`/school/${el.shortid}`}>
+                            <RouterNavigator url={`/organization/${el.shortid}`}>
                                 {centum.shorter(el.title)}
                             </RouterNavigator>
                         </Marker>
@@ -95,9 +100,9 @@ const Schools: React.FC = () => {
                 </ReactMapGL> 
             }
 
-            {loading && <Loading label='Загрузка учебных заведений' />}
+            {loading && <Loading label='Загрузка организаций' />}
         </div>
     )
 }
 
-export default Schools
+export default Organizations

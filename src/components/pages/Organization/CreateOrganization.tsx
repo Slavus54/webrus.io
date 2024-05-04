@@ -6,14 +6,13 @@ import {AppContext} from '../../../context/AppContext'
 import {updateProfileInfo, getTownsFromStorage} from '../../../utils/storage'
 import {changeTitle, buildNotification} from '../../../utils/notifications'
 import FormPagination from '../../../shared/UI/FormPagination'
-import ImageLoader from '../../../shared/UI/ImageLoader'
 import MapPicker from '../../../shared/UI/MapPicker'
-import {createSchoolM} from './gql/mutations'
-import {SCHOOL_TYPES, SUBJECTS, DEFAILT_RATING} from './env'
+import {createOrganizationM} from './gql/mutations'
+import {ORGANIZATION_TYPES, OWNERSHIP_TYPES, PRODUCT_TYPES, DEFAILT_RATING} from './env'
 import {SEARCH_PERCENT, MAP_ZOOM, VIEW_CONFIG, token} from '../../../env/env'
 import {ContextType, TownType, MapType, CollectionPropsType} from '../../../env/types'
 
-const CreateSchool: React.FC<CollectionPropsType> = ({params: {id}}) => {
+const CreateOrganization: React.FC<CollectionPropsType> = ({params: {id}}) => {
     const {account} = useContext<ContextType>(AppContext)
     const [view, setView] = useState<MapType>(VIEW_CONFIG)
     const [towns] = useState<TownType[]>(getTownsFromStorage())
@@ -21,17 +20,19 @@ const CreateSchool: React.FC<CollectionPropsType> = ({params: {id}}) => {
 
     const [state, setState] = useState({
         title: '', 
-        category: SCHOOL_TYPES[0],  
+        category: ORGANIZATION_TYPES[0],  
+        format: OWNERSHIP_TYPES[0],
         region: towns[0].translation, 
         cords: towns[0].cords, 
-        subject: SUBJECTS[0], 
+        url: '', 
+        product: PRODUCT_TYPES[0],
         rating: DEFAILT_RATING
     })
 
-    const {title, category, region, cords, subject, rating} = state 
+    const {title, category, format, region, cords, url, product, rating} = state 
 
     useLayoutEffect(() => {
-        changeTitle('New School')
+        changeTitle('New Organization')
     }, [])
 
     useMemo(() => {
@@ -48,17 +49,17 @@ const CreateSchool: React.FC<CollectionPropsType> = ({params: {id}}) => {
         setView({...view, latitude: cords.lat, longitude: cords.long, zoom: MAP_ZOOM})
     }, [cords])
     
-    const [createSchool] = useMutation(createSchoolM, {
+    const [createOrganization] = useMutation(createOrganizationM, {
         onCompleted(data) {
-            buildNotification(data.createSchool)
+            buildNotification(data.createOrganization)
             updateProfileInfo(null)
         }
     })
 
     const onCreate = () => {
-        createSchool({
+        createOrganization({
             variables: {
-                name: account.name, id, title, category, region, cords, subject, rating, image
+                name: account.name, id, title, category, format, region, cords, url, product, rating
             }
         })
     }
@@ -70,17 +71,23 @@ const CreateSchool: React.FC<CollectionPropsType> = ({params: {id}}) => {
                     <textarea value={title} onChange={e => setState({...state, title: e.target.value})} placeholder='Название...' />
           
                     <div className='items small'>
-                        {SCHOOL_TYPES.map(el => <div onClick={() => setState({...state, category: el})} className={el === category ? 'item label active' : 'item label'}>{el}</div>)}
+                        {ORGANIZATION_TYPES.map(el => <div onClick={() => setState({...state, category: el})} className={el === category ? 'item label active' : 'item label'}>{el}</div>)}
                     </div> 
 
-                    <h4 className='pale'>Результаты сдачи ЕГЭ - <b>{rating}</b> баллов</h4>
-                    <input value={rating} onChange={e => setState({...state, rating: parseInt(e.target.value)})} type='range' step={1} />
+                    <input value={url} onChange={e => setState({...state, url: e.target.value})} placeholder='URL' type='text' />                   
                     
-                    <select value={subject} onChange={e => setState({...state, subject: e.target.value})}>
-                        {SUBJECTS.map(el => <option value={el}>{el}</option>)}
-                    </select>
+                    <h4 className='pale'>Тип собственности и IT-продукт</h4>
+                    <div className='items small'>
+                        <select value={format} onChange={e => setState({...state, format: e.target.value})}>
+                            {OWNERSHIP_TYPES.map(el => <option value={el}>{el}</option>)}
+                        </select>
+                        <select value={product} onChange={e => setState({...state, product: e.target.value})}>
+                            {PRODUCT_TYPES.map(el => <option value={el}>{el}</option>)}
+                        </select>
+                    </div>
 
-                    <ImageLoader setImage={setImage} />
+                    <h4 className='pale'>Оценка: <b>{rating}%</b></h4>
+                    <input value={rating} onChange={e => setState({...state, rating: parseInt(e.target.value)})} type='range' step={1} />
                 </>,
                 <>
                     <h4 className='pale'>Где это находится?</h4>
@@ -93,7 +100,7 @@ const CreateSchool: React.FC<CollectionPropsType> = ({params: {id}}) => {
                     </ReactMapGL> 
                 </>
             ]}>
-                <h2>Новая Учереждение</h2>
+                <h2>Новая Организация</h2>
                 |
                 <button onClick={onCreate}>Создать</button>
             </FormPagination>  
@@ -101,4 +108,4 @@ const CreateSchool: React.FC<CollectionPropsType> = ({params: {id}}) => {
     )
 }
 
-export default CreateSchool
+export default CreateOrganization

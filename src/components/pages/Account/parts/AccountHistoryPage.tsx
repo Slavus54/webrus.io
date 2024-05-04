@@ -20,8 +20,8 @@ const AccountHistoryPage: React.FC<AccountPropsType> = ({profile}) => {
                     <div className='item panel'>
                         <RouterNavigator url={el.url}>
                             {centum.shorter(el.title, 4)}
-                            <p className='pale'>{el.type}</p>
                         </RouterNavigator>
+                        <p className='pale'>{el.type}</p>
                     </div>
                 )}
             </div>

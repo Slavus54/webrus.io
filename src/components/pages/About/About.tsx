@@ -1,14 +1,25 @@
 import React, {useState, useLayoutEffect, useEffect} from 'react'
+import {atom, useRecoilValue, useSetRecoilState, RecoilEnv} from 'recoil'
 import {centum} from '../../../shared/libs/libs'
 import {changeTitle} from '../../../utils/notifications'
 import ImageLook from '../../../shared/UI/ImageLook'
 import {WAGES, DEFAULT_PERCENT, ARCHITECTURE_FOUNDATION_ICON, ARCHITECTURE_FOUNDATION_URL, HISTORIAN_ICON, HISTORIAN_URL} from './env'
 import {WageType} from '../../../env/types'
 
+RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
+
 const About: React.FC = () => {
     const [wage, setWage] = useState<WageType>(WAGES[0])
-    const [percent, setPercent] = useState<number>(DEFAULT_PERCENT)
-    const [value, setValue] = useState<number>(0)
+
+    const valueState = atom({
+        key: 'value',
+        default: 0
+    })
+
+    const value = useRecoilValue(valueState)
+    const setValue = useSetRecoilState(valueState)
+
+    const [percent, setPercent] = useState<number>(DEFAULT_PERCENT)   
 
     useLayoutEffect(() => {
         changeTitle('About')

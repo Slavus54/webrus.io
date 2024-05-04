@@ -38,6 +38,12 @@ import CreateSchool from '../components/pages/School/CreateSchool'
 import Schools from '../components/pages/School/Schools'
 import School from '../components/pages/School/School'
 
+// Organization's Components
+
+import CreateOrganization from '../components/pages/Organization/CreateOrganization'
+import Organizations from '../components/pages/Organization/Organizations'
+import Organization from '../components/pages/Organization/Organization'
+
 // Profile's Components
 
 import Profiles from '../components/pages/Profile/Profiles'
@@ -183,6 +189,27 @@ export const items: RouteItem[] = [
         title: '',
         url: '/school/:id',
         component: School,
+        status: RouteStatuses.RegisteredOnly,
+        visible: false
+    },
+    {
+        title: '',
+        url: '/create-organization/:id',
+        component: CreateOrganization,
+        status: RouteStatuses.RegisteredOnly,
+        visible: false
+    },
+    {
+        title: '',
+        url: '/organizations',
+        component: Organizations,
+        status: RouteStatuses.RegisteredOnly,
+        visible: false
+    },
+    {
+        title: '',
+        url: '/organization/:id',
+        component: Organization,
         status: RouteStatuses.RegisteredOnly,
         visible: false
     },

@@ -57,7 +57,7 @@ const AccountGeoPage: React.FC<AccountPropsType> = ({profile}) => {
 
     return (
         <div className='main profile'>
-            <h2>Мой Регион</h2>
+            <h2>Локация</h2>
             <h4 className='pale'>Ваше местонахождение на данный момент</h4>
 
             <input value={region} onChange={e => setRegion(e.target.value)} placeholder='Регион' type='text' />
@@ -79,11 +79,16 @@ const AccountGeoPage: React.FC<AccountPropsType> = ({profile}) => {
                 <button onClick={onUpdate}>Обновить</button>
             </div>
             
-            <h2>Учебные заведения</h2>
-            
-            <RouterNavigator url='/schools'>
-                <button className='light'>Смотреть</button>
-            </RouterNavigator>
+            <h2>Инфраструктура на карте</h2>
+
+            <div className='items small'>
+                <RouterNavigator url='/schools'>
+                    <span>Учебные заведения</span>
+                </RouterNavigator>
+                <RouterNavigator url='/organizations'>
+                    <span>Прочие организации</span>
+                </RouterNavigator>
+            </div>   
         </div>
     )
 }
