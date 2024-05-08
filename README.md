@@ -20,6 +20,7 @@ New architecture on client side (FSD and Components), allows to split web app on
 Optimized routing with state checking and minimized re-renders.              
 Responsive UI for menu and sidebar.      
 Persist latest session and pages visits.         
+Points system to attract users into platform building.
 
 ### URL  
 
