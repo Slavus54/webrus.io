@@ -28,7 +28,7 @@ export const VIEW_CONFIG = {
 } 
 
 export const WEBSERVER_URL = 'https://webrus-backend.onrender.com/graphql'
-export const TOWNS_API_ENDPOINT = 'https://towns-api.onrender.com/towns-fragment/39&159'
+export const TOWNS_API_ENDPOINT = 'https://towns-api.vercel.app/towns-fragment/64&184'
 
 export const SEARCH_PERCENT = 60
 export const PAGINATION_LIMIT = 3
